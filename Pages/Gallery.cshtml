@@ -1,0 +1,293 @@
+﻿@page
+@model GalleryModel
+@{
+    ViewData["Title"] = "Memory Gallery";
+}
+<style>
+    body {
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background: #ffe0f0;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        color: #333;
+    }
+
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.85);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .popup-box {
+        background: #ff4081;
+        padding: 30px;
+        border-radius: 20px;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        animation: fadeIn 1s ease;
+    }
+
+        .popup-box p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .popup-box button {
+            padding: 10px 20px;
+            background: white;
+            color: #ff4081;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+            .popup-box button:hover {
+                background: #fff176;
+            }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .carousel {
+        position: relative;
+        max-width: 600px;
+        margin: 60px auto;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        background: #fff;
+        display: none;
+    }
+
+    .slide {
+        display: none;
+        padding: 20px;
+    }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide img, .slide video {
+            width: 100%;
+            border-radius: 12px;
+            max-height: 400px;
+            object-fit: contain;
+            background-color: #fff;
+        }
+
+    .caption {
+        margin-top: 10px;
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    .controls {
+        margin-top: 20px;
+        display: none;
+    }
+
+        .controls button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            background: #ff4081;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+            .controls button:hover {
+                background: #e91e63;
+            }
+
+    .back-home {
+        display: none;
+        margin-top: 30px;
+        text-decoration: none;
+        color: #2196f3;
+        font-weight: bold;
+    }
+</style>
+
+<!-- Initial Pop-Up -->
+<div id="popup" class="popup-overlay">
+    <div class="popup-box">
+        <p>
+            Well tried to do something else but realized<br>
+            <strong>“Eto joggotao hoy nai 😔😩”</strong><br><br>
+            So here you go with an extra page of Balpashaaaaaaa 😈🎁<br><br>
+            No need to thank me 🙄<br>
+            <strong>It's my plasure 😌✨</strong>
+        </p>
+        <button onclick="closePopup()">Enter</button>
+    </div>
+</div>
+
+<!-- Second Pop-Up After Last Image -->
+<div id="finalPopup" class="popup-overlay" style="display: none;">
+    <div class="popup-box">
+        <p>
+            Probably late But<br>
+            <strong>Happy Birthday Nowrin!🎂</strong><br><br>
+            Stay blessed kukul 💀 🖤
+        </p>
+        <button onclick="goToFirstSlide()">↩️ Back to First Slide</button>
+    </div>
+</div>
+
+<h1 style="margin-top: 30px;">📸 Pictures to remember Gallery</h1>
+
+<div id="carousel" class="carousel">
+    <div class="slide active">
+        <img src="/Image/K-1.jpeg" alt="Dekh Tor pic" />
+        <div class="caption">Dekh Tor pic YOU GAY lekha ..... ( Though amr ager tey doubt chilo )</div>
+    </div>
+    <div class="slide">
+        <img src="/Image/K-2.jpeg" alt="Vay tor snap" />
+        <div class="caption">vay tor snap chara pic tulte iccha kore na? Mane thik ase cehara kharap jani kintu ty boila sob snap e tulbi? Lav hoyse kono ? Cehara to sey khet e roiya gese</div>
+    </div>
+    <div class="slide">
+        <img src="/Image/K-3.jpg" alt="Ugly pic" />
+        <div class="caption">Tomar moto eto ugly khoma hoyle amio dhaikka raktam 💀</div>
+    </div>
+    <div class="slide">
+        <img src="/Image/K-4.jpeg" alt="Local dog" />
+        <div class="caption">Local Dog too cool for town 🐶</div>
+    </div>
+    <div class="slide">
+        <img src="/Image/K-5.jpg" alt="We already know" />
+        <div class="caption">We already know what you are !! No need to say it again !! 😒🙄🤡</div>
+    </div>
+    <div class="slide">
+        <img src="/Image/K-11.jpeg" alt="Salam diya" />
+        <div class="caption">Salam diya kotha bolba ! Thik time e biya korle tomar boyoshi maiya thakto amrrrrr!
+            ajkalkar  polapain beyadop sob somman dite jane naaa ki r bolbo 😤🙄</div>
+    </div>
+    <div class="slide">
+        <img src="/Image/K-12.jpeg" alt="Cadkul bro" />
+        <div class="caption">Baiiiii dekhennn Cadkul Broooo 😍
+            Could have been your lop of life 😘💘😭</div>
+    </div>
+    <div class="slide">
+        <img src="/Image/K-8.jpeg" alt="Cat and Dog" />
+        <div class="caption">A Cat is being held by a Dog 🐱🐶😮</div>
+    </div>
+    <div class="slide">
+        <img src="/Image/K-9.jpg" alt="Filter pic" />
+        <div class="caption">Vayy gallery te paysi eyta !! 
+            kutta bolte bolte kutta filter lagano pic e paya gesi XD!! 😂🐶📸</div>
+    </div>
+    <div class="slide">
+        <img src="/Image/K-10.jpeg" alt="Confession crush" />
+        <div class="caption">Baiii dekhen apnr crush and confession er pic !!! Ufff sekiiii abeggg ! Emn balpashaaa dirim baiii dirim 💘🥹💌</div>
+    </div>
+    <div class="slide">
+        <video controls>
+            <source src="/Image/V-1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="caption">uss being uss</div>
+    </div>
+    <div class="slide">
+        <img src="/Image/K-6.jpg" alt="Duytarey" />
+        <div class="caption">Vay duytarey ki khet e na lagtaseee ( Though ami ey pic gula haray felsi eyta collage e chilo oykhan te paylam !!! 😭😂🌾)</div>
+    </div>
+    <div class="slide">
+        <img src="/Image/K-7.jpeg" alt="Ajaira pic" />
+        <div class="caption">Ey ekta pic e paysiii ( Though of course emn ajaira pic e hobee amader 🐸😄 ) Bai dekha koiren abr emne ajaira pic tulbo neeeeeeee 😤</div>
+    </div>
+</div>
+
+<div class="controls" id="controls">
+    <button onclick="prevSlide()">⏮️ Prev</button>
+    <button onclick="nextSlide()">Next ⏭️</button>
+</div>
+
+<a href="/Secret" class="back-home" id="backLink">← Back to Birthday Page</a>
+
+<script>
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('carousel').style.display = 'block';
+        document.getElementById('controls').style.display = 'block';
+        document.getElementById('backLink').style.display = 'block';
+    }
+
+    function closeFinalPopup() {
+        document.getElementById('finalPopup').style.display = 'none';
+        document.getElementById('carousel').style.display = 'block';
+        document.getElementById('controls').style.display = 'block';
+        document.getElementById('backLink').style.display = 'block';
+        showSlide(currentSlide); // Reset current slide
+    }
+
+    function goToFirstSlide() {
+        currentSlide = 0;
+        document.getElementById('finalPopup').style.display = 'none';
+        document.getElementById('carousel').style.display = 'block';
+        document.getElementById('controls').style.display = 'block';
+        document.getElementById('backLink').style.display = 'block';
+        showSlide(currentSlide);
+    }
+
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        pauseAllVideos();
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+
+        // Show final popup after last slide
+        if (index === slides.length - 1) {
+            setTimeout(() => {
+                document.getElementById('finalPopup').style.display = 'flex';
+                document.getElementById('carousel').style.display = 'none';
+                document.getElementById('controls').style.display = 'none';
+                document.getElementById('backLink').style.display = 'none';
+            }, 5000);
+        }
+    }
+
+    function pauseAllVideos() {
+        document.querySelectorAll('video').forEach(video => {
+            video.pause();
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+</script>

@@ -1,0 +1,179 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Private Login";
+}
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        color: #3e2723;
+        background: linear-gradient(135deg, #ffe0ec, #fff3e0, #e1f5fe);
+        background-size: 400% 400%;
+        height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    h1 {
+        margin-top: 60px;
+        font-size: 2.5rem;
+        color: #d84315;
+        text-align: center;
+    }
+
+    form {
+        background-color: #fff8e1;
+        border: 3px dashed #ff7043;
+        border-radius: 20px;
+        padding: 30px;
+        width: 90%;
+        max-width: 400px;
+        margin: 40px auto;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+        z-index: 10;
+    }
+
+    input[type="password"] {
+        padding: 10px;
+        width: 80%;
+        border: 2px solid #ff9800;
+        border-radius: 10px;
+        font-size: 1rem;
+    }
+
+    button {
+        margin-top: 20px;
+        background-color: #ff6f00;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        button:hover {
+            background-color: #e65100;
+        }
+
+    .hint {
+        font-style: italic;
+        color: #5d4037;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .error {
+        color: red;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .note {
+        background-color: #ffecb3;
+        padding: 20px;
+        margin: 30px auto;
+        max-width: 600px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(255, 213, 79, 0.3);
+        text-align: left;
+        font-size: 0.95rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    /* Confetti style */
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        opacity: 0.8;
+        pointer-events: none;
+        z-index: 5;
+    }
+</style>
+
+<h1>Hey it's your Birthday! Ah such an Ominous Day.</h1>
+
+<p style="text-align:center;">Please enter the password to continue.</p>
+
+<form method="post">
+    <label for="password">Password:</label><br />
+    <input asp-for="PasswordInput" type="password" id="password" /><br />
+    <button type="submit">Login</button>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <p class="error">@Model.Message</p>
+    }
+</form>
+
+<p class="hint">💡 Just put the fucking date suwar.....</p>
+
+<div class="note">
+    <h3>📝 Notes:</h3>
+    <p>
+        Ahem Ahem!<br />
+        Well if you got this link way past your birthday, then you should really know you are a one-of-a-kind special breed of Kukul.<br />
+        As I am sure by the time you got this, I’m crying in a corner with all my pending projects and assignments with a final fucking exam!!!<br /><br />
+        So guessing you won't mind (R Emneo tui mind korley ki kutta treat to r des na)<br /><br />
+        Oh, if you're still unable to login — the password is your birthdate...
+    </p>
+</div>
+
+<!-- Container for confetti -->
+<div id="confetti-container"></div>
+
+<script>
+    const confettiCount = 30;
+    const confettiContainer = document.getElementById('confetti-container');
+
+    // Create confetti elements
+    for (let i = 0; i < confettiCount; i++) {
+        let confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.top = `${Math.random() * -20}vh`; // start above viewport
+        confetti.speed = 1 + Math.random() * 3;
+        confetti.angle = Math.random() * 360;
+        confetti.angularSpeed = (Math.random() - 0.5) * 10;
+        confettiContainer.appendChild(confetti);
+    }
+
+    function animateConfetti() {
+        const confettis = document.querySelectorAll('.confetti');
+        confettis.forEach(confetti => {
+            let top = parseFloat(confetti.style.top);
+            let left = parseFloat(confetti.style.left);
+            let angle = confetti.angle;
+            let speed = confetti.speed;
+            let angularSpeed = confetti.angularSpeed;
+
+            top += speed;
+            angle += angularSpeed;
+            // Move confetti down, reset to top if off screen
+            if (top > window.innerHeight) {
+                top = -10; // reset above screen
+                left = Math.random() * window.innerWidth;
+            }
+            confetti.style.top = top + 'px';
+            confetti.style.left = left + 'px';
+            confetti.style.transform = `rotate(${angle}deg)`;
+
+            confetti.angle = angle;
+        });
+
+        requestAnimationFrame(animateConfetti);
+    }
+
+    animateConfetti();
+</script>
+
